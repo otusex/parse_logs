@@ -13,14 +13,14 @@ LAST_LINE=""
 FIRST_LINE=""
 
 echo "checking if a proccess exists..."
-sleep 3
+sleep 1
 if [[ -f "$PID_FILE_THIS_PROCCES"  ]]; then
  echo "Proccess is running ..."
  exit 1
 fi
 
 echo "checking command args..."
-sleep 3
+sleep 1
 if [[ $1 == "" ]]; then
  echo "Input email..."
  exit 1
@@ -59,14 +59,14 @@ FIRST_LINE="1"
 fi
 
 echo "Parse TIME_START and TIME_END..."
-sleep 3
+sleep 1
 TIME_START=$(cat $ACCESS_LOG | sed -n "$FIRST_LINE","$LAST_LINE"p | awk '{print $4 $5}' | sed 's/\[//; s/\]//' | head -n 1)
 TIME_END=$(cat $ACCESS_LOG |   sed -n "$FIRST_LINE","$LAST_LINE"p | awk '{print $4 $5}' | sed 's/\[//; s/\]//' | tail -n 1)
  
 echo -e "Period: $TIME_START - $TIME_END \n" > $FILE_INFO
 
 echo "Parse logs..."
-sleep 3
+sleep 1
 echo 'Number of requests:  IP:' >> $FILE_INFO
 cat $ACCESS_LOG | awk '{print $1}' | sort | uniq -c | sed -e "s/^ *//g" | sed -e "s/ /       /g" | sort -rn | head  >> $FILE_INFO
 echo -e '\nNumber of requests:  Requested page:' >> $FILE_INFO
@@ -76,13 +76,13 @@ cat $ACCESS_LOG | awk '{print $9}' | sort | uniq -c | sed -e "s/^ *//g" | sed -e
 
 
 echo "Send info to email: $EMAIL ..."
-sleep 3
+sleep 1
 sendmail $EMAIL < $FILE_INFO
 
 sig_trap
 
 echo "Write last line to file..."
-sleep 3
+sleep 1
 echo $LAST_LINE > $FILE_FIRST_LINE
 
 rm -f $PID_FILE_THIS_PROCCES $FILE_INFO
