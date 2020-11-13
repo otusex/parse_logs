@@ -31,6 +31,11 @@ if [[ $2 == "" ]]; then
  exit 1
 fi
 
+if [[ !  -f $2 ]]; then
+ echo "File not exist ..."
+ exit 1
+fi
+
 EMAIL=$1
 ACCESS_LOG=$2
 
@@ -47,8 +52,8 @@ sleep 2
 
 LAST_LINE=$(wc -l  $ACCESS_LOG | awk '{print $1}')
 
-if [[ -f  $FILE_FIRST_LINE && -n $(cat last_line) ]]; then 
-FIRST_LINE=$(cat last_line)  
+if [[ -f  $FILE_FIRST_LINE && -n $(cat $FILE_FIRST_LINE) ]]; then 
+FIRST_LINE=$(cat $FILE_FIRST_LINE)  
 else 
 FIRST_LINE="1" 
 fi
