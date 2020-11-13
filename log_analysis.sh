@@ -32,7 +32,7 @@ if [[ $2 == "" ]]; then
 fi
 
 if [[ !  -f $2 ]]; then
- echo "File acces log not exist ..."
+ echo "File access log not exist ..."
  exit 1
 fi
 
